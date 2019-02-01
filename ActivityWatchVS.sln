@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityWatchVSWatcher", "ActivityWatchVSWatcher\ActivityWatchVSWatcher.csproj", "{7499C181-6E02-4184-86D9-69EC7F782DA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityWatchVS", "ActivityWatchVS\ActivityWatchVS.csproj", "{7499C181-6E02-4184-86D9-69EC7F782DA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityWatch.API", "ActivityWatch.API\ActivityWatch.API.csproj", "{F7E23CC7-9B18-436B-927F-75022FF7617D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7499C181-6E02-4184-86D9-69EC7F782DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7499C181-6E02-4184-86D9-69EC7F782DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7499C181-6E02-4184-86D9-69EC7F782DA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E23CC7-9B18-436B-927F-75022FF7617D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E23CC7-9B18-436B-927F-75022FF7617D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E23CC7-9B18-436B-927F-75022FF7617D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E23CC7-9B18-436B-927F-75022FF7617D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
