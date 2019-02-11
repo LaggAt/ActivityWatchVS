@@ -22,17 +22,5 @@ namespace ActivityWatchVS {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableWatcher {
-            get {
-                return ((bool)(this["EnableWatcher"]));
-            }
-            set {
-                this["EnableWatcher"] = value;
-            }
-        }
     }
 }

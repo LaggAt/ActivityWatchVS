@@ -12,29 +12,32 @@ namespace ActivityWatchVS.Services
     {
         #region Constants
 
-        private const double MIN_HEARTBEAT_SECONDS = 60;
-        private const double WAIT_FOR_EVENT_SECONDS = 20;
         private const double AFK_SECONDS = 60 * 15;
+        private const double MIN_HEARTBEAT_SECONDS = 60;
+        private const int THREAD_WAIT_TIMEOUT_SECONDS = 60;
+        private const int WAIT_FOR_EVENT_SECONDS = 20;
 
         #endregion Constants
 
         #region Fields
 
-        private ConcurrentQueue<ActivityWatch.API.V1.Event> _events = new ConcurrentQueue<ActivityWatch.API.V1.Event>();
-        private ManualResetEvent _newEventAvailable = new ManualResetEvent(false);
-        private Task _thread = null;
-        private AWPackage package;
+        private CancellationTokenSource _cancellationTokenSource;
         private Client _client;
+        private ManualResetEvent _continueLoopManualResetEvent = new ManualResetEvent(false);
+        private bool _doShutdown = false;
+        private ConcurrentQueue<ActivityWatch.API.V1.Event> _events = new ConcurrentQueue<ActivityWatch.API.V1.Event>();
         private bool _isBucketSent = false;
+        private AWPackage _package;
+        private Task _thread = null;
         private Dictionary<string, ActivityWatch.API.V1.Event> bucketIdPartLastEvent = new Dictionary<string, Event>();
 
         #endregion Fields
 
         #region Constructors
 
-        internal EventService(AWPackage package_)
+        internal EventService(AWPackage package)
         {
-            package = package_;
+            _package = package;
         }
 
         private EventService()
@@ -45,11 +48,38 @@ namespace ActivityWatchVS.Services
 
         #region Methods
 
+        public void Reset()
+        {
+            _isBucketSent = false;
+        }
+
         internal void AddEvent(ActivityWatch.API.V1.Event ev)
         {
+            if (_doShutdown) //(_cancellationTokenSource?.IsCancellationRequested ?? false)
+            {
+                return;
+            }
             _events.Enqueue(ev);
-            _newEventAvailable.Set();
+            _continueLoopManualResetEvent.Set();
             startThread();
+        }
+
+        internal void Shutdown()
+        {
+            //_cancellationTokenSource?.Cancel();
+            _doShutdown = true;
+            _continueLoopManualResetEvent.Set();
+
+            //if (_thread != null)
+            //{
+            //    Task.WaitAll(new Task[] { _thread }, THREAD_WAIT_TIMEOUT_SECONDS * 1000);
+            //}
+            _thread?.Wait(THREAD_WAIT_TIMEOUT_SECONDS * 1000);
+        }
+
+        private static string getBucketId(Event ev)
+        {
+            return $"{ev.Data.BucketIDCustomPart}_{Environment.MachineName}";
         }
 
         private bool mergeEventsAndOutFinishedEvent(out ActivityWatch.API.V1.Event logEvent)
@@ -57,6 +87,8 @@ namespace ActivityWatchVS.Services
             logEvent = null;
             if (_events.TryDequeue(out ActivityWatch.API.V1.Event newEvent))
             {
+                _package.LogService.Log($"new Event for {getBucketId(newEvent)}: " + newEvent.ToJson(), LogService.EErrorLevel.Debug);
+
                 ActivityWatch.API.V1.Event oldEvent = null;
                 // do we have an old event?
                 if (bucketIdPartLastEvent.ContainsKey(newEvent.Data.BucketIDCustomPart))
@@ -93,39 +125,51 @@ namespace ActivityWatchVS.Services
             }
             else
             {
-                // nothing to dequeue, create stop events
-                foreach (var stopEvent in bucketIdPartLastEvent.Values.Where(e => e.Timestamp.AddSeconds((int)e.Duration) < DateTimeOffset.UtcNow.AddSeconds(-AFK_SECONDS)))
+                if (_doShutdown) //(_cancellationTokenSource.IsCancellationRequested)
                 {
-                    // write event, user is afk
-                    stopEvent.Duration = AFK_SECONDS;
-                    bucketIdPartLastEvent.Remove(stopEvent.Data.BucketIDCustomPart);
-                    logEvent = stopEvent;
-                    return true;
+                    // we are shutting down, create stop events
+                    var stopEvent = bucketIdPartLastEvent.Values.FirstOrDefault();
+                    if (stopEvent != null)
+                    {
+                        // write event, we are about to stop
+                        bucketIdPartLastEvent.Remove(stopEvent.Data.BucketIDCustomPart);
+                        stopEvent.Duration = (DateTimeOffset.UtcNow - stopEvent.Timestamp).TotalSeconds;
+                        logEvent = stopEvent;
+                        return true;
+                    }
+                }
+                else
+                {
+                    // nothing to dequeue, create stop events (AFK)
+                    var stopEvent = bucketIdPartLastEvent.Values.FirstOrDefault(e => e.Timestamp.AddSeconds((int)e.Duration) < DateTimeOffset.UtcNow.AddSeconds(-AFK_SECONDS));
+                    if (stopEvent != null)
+                    {
+                        // write event, user is afk
+                        bucketIdPartLastEvent.Remove(stopEvent.Data.BucketIDCustomPart);
+                        stopEvent.Duration = AFK_SECONDS;
+                        logEvent = stopEvent;
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        private async Task postBucketIfNeededAsync(string bucket_id, string bucketType)
+        private async Task postBucketIfNeededAsync(string bucket_id, string bucketType, CancellationToken cancellationToken)
         {
-            if (!_isBucketSent)
+            if (!_isBucketSent || _package.AwOptions.ActivityWatchBaseURL != _client?.BaseUrl)
             {
                 _client = new ActivityWatch.API.V1.Client();
-                _client.BaseUrl = @"http://localhost:5600/api";
-//#if DEBUG
-//                _client.BaseUrl = @"http://ipv4.fiddler:5666/api";
-//#endif
+                _client.BaseUrl = _package.AwOptions.ActivityWatchBaseURL;
                 var awBucket = new ActivityWatch.API.V1.CreateBucket()
                 {
-                    Client = AWPackage.CLIENT_NAME,
-                    //Id = AWPackage.PackageGuidString,
+                    Client = AWPackage.NAME_ACTIVITY_WATCHER,
                     Hostname = Environment.MachineName,
-                    //Created = DateTime.UtcNow,
                     Type = bucketType
                 };
                 try
                 {
-                    var bucketResult = await _client.BucketsIdPostAsync(awBucket, bucket_id);
+                    var bucketResult = await _client.BucketsPostAsync(awBucket, bucket_id, cancellationToken).ConfigureAwait(false);
                 }
                 catch (ActivityWatch.API.V1.AWApiException ex)
                 {
@@ -142,48 +186,56 @@ namespace ActivityWatchVS.Services
             }
         }
 
-        private async Task pushEventsThreadAsync()
+        private void pushEventsThread(CancellationToken cancellationToken)
         {
             for (; ; )
             {
-                ActivityWatch.API.V1.Event ev = null;
                 try
                 {
-                    if (package.Features.IsShutdownPending)
-                    {
-                        // I never get here
-                        return;
-                    }
-
-                    bool hasFired = _newEventAvailable.WaitOne((int)(WAIT_FOR_EVENT_SECONDS * 1000));
+                    bool hasFired = _continueLoopManualResetEvent.WaitOne(WAIT_FOR_EVENT_SECONDS * 1000);
                     while (mergeEventsAndOutFinishedEvent(out ActivityWatch.API.V1.Event logEvent))
                     {
-                        var bucket_id = $"{logEvent.Data.BucketIDCustomPart}_{Environment.MachineName}";
+                        var bucket_id = getBucketId(logEvent);
 
                         bool ok = false;
                         do
                         {
                             try
                             {
-                                await postBucketIfNeededAsync(bucket_id, logEvent.Data.TypeName);
-                                await _client.BucketsIdHeartbeatAsync(logEvent, "2.0", bucket_id);
+                                //await
+                                postBucketIfNeededAsync(bucket_id, logEvent.Data.TypeName, _cancellationTokenSource.Token)
+                                    .GetAwaiter().GetResult();
+                                //await
+                                _client.BucketsIdEventsPostAsync(logEvent, bucket_id, _cancellationTokenSource.Token)
+                                    .GetAwaiter().GetResult();
+                                _package.LogService.Log($"Sent event for {bucket_id}: " + logEvent.ToJson(), LogService.EErrorLevel.Debug);
                                 ok = true;
                             }
                             catch (Exception ex)
                             {
                                 // some error, retry regularly
-                                ; //TODO: LOG
-                                Thread.Sleep(5000);
+                                _package.LogService.Log(ex, logEvent.ToJson());
+                                if (!_doShutdown) //(!cancellationToken.IsCancellationRequested)
+                                {
+                                    Reset();
+                                    // don't ddos
+                                    Thread.Sleep(5000);
+                                }
                             }
-                        } while (!ok);
+                        } while (!ok && !_doShutdown); //cancellationToken.IsCancellationRequested); // don't retry if we do shut down
                     }
-                    _newEventAvailable.Reset();
+                    _continueLoopManualResetEvent.Reset();
+                    if (_doShutdown && _events.IsEmpty) //_events.IsEmpty needed?
+                    {
+                        break;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    ; // TODO: LOG
+                    _package.LogService.Log(ex);
                 }
             }
+            _package.LogService.Log("EventService loop ended", LogService.EErrorLevel.Debug);
         }
 
         private void startThread()
@@ -194,8 +246,8 @@ namespace ActivityWatchVS.Services
                 {
                     if (_thread == null)
                     {
-                        _thread = new Task(() => pushEventsThreadAsync());
-                        _thread.Start();
+                        _cancellationTokenSource = new CancellationTokenSource();
+                        _thread = Task.Run(() => pushEventsThread(_cancellationTokenSource.Token));
                     }
                 }
             }

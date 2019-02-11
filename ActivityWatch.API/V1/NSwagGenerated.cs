@@ -199,14 +199,14 @@ namespace ActivityWatch.API.V1
         /// <exception cref="AWApiException">A server side error occurred.</exception>
         public System.Threading.Tasks.Task<AWResponse> BucketsIdPostAsync(CreateBucket payload, string bucket_id)
         {
-            return BucketsIdPostAsync(payload, bucket_id, System.Threading.CancellationToken.None);
+            return BucketsPostAsync(payload, bucket_id, System.Threading.CancellationToken.None);
         }
     
         /// <summary>Create bucket</summary>
         /// <returns>Success</returns>
         /// <exception cref="AWApiException">A server side error occurred.</exception>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async System.Threading.Tasks.Task<AWResponse> BucketsIdPostAsync(CreateBucket payload, string bucket_id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<AWResponse> BucketsPostAsync(CreateBucket payload, string bucket_id, System.Threading.CancellationToken cancellationToken)
         {
             if (bucket_id == null)
                 throw new System.ArgumentNullException("bucket_id");

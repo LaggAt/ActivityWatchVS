@@ -32,14 +32,6 @@
     with command ids defined by other packages. -->
 
     <Menus>
-      <Menu guid="guidAWPackageCmdSet" id="TopLevelMenu" priority="0x700" type="Menu">
-        <Parent guid="guidSHLMainMenu"
-                id="IDG_VS_MM_TOOLSADDINS" />
-        <Strings>
-          <ButtonText>TestMenu</ButtonText>
-          <CommandName>AWWatcher</CommandName>
-        </Strings>
-      </Menu>
     </Menus>
 
     <!-- In this section you can define new menu groups. A menu group is a container for
@@ -47,9 +39,6 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidAWPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidAWPackageCmdSet" id="TopLevelMenu" />
-      </Group>
     </Groups>
 
     <!--Buttons section. -->
@@ -63,13 +52,6 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidAWPackageCmdSet" id="EnableDisableAWWatcherCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidAWPackageCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
-          <ButtonText>Enable/Disable AWWatcher</ButtonText>
-        </Strings>
-      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -79,7 +61,6 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\EnableDisableAWWatcherCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -90,8 +71,6 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidAWPackageCmdSet" value="{d36069ab-530f-46fb-bfa4-9a0de649fd4a}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="EnableDisableAWWatcherCommandId" value="0x0100" />
-      <IDSymbol name="TopLevelMenu" value="0x1021" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{5af084a7-474b-4cfd-9ee2-ac45ae43e880}">

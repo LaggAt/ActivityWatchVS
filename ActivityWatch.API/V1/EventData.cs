@@ -17,6 +17,9 @@ namespace ActivityWatch.API.V1
         [Newtonsoft.Json.JsonIgnore]
         public string BucketIDCustomPart { get => "aw-visualstudio-editor"; }
 
+        [Newtonsoft.Json.JsonProperty("caller", Required = Newtonsoft.Json.Required.Default)]
+        public string Caller { get; set; }
+
         [Newtonsoft.Json.JsonProperty("file", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string File { get; set; }
@@ -25,12 +28,10 @@ namespace ActivityWatch.API.V1
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Language { get; set; }
 
-        // full path to file
         [Newtonsoft.Json.JsonProperty("project", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Project { get; set; }
 
-        /// full path of cwd name of language of the file
         [Newtonsoft.Json.JsonIgnore]
         public string TypeName { get => "app.editor.activity"; }
 
@@ -46,7 +47,8 @@ namespace ActivityWatch.API.V1
                     && this.BucketIDCustomPart == BucketIDCustomPart
                     && this.File == data.File
                     && this.Language == data.Language
-                    && this.Project == data.Project;
+                    && this.Project == data.Project
+                    && this.Caller == data.Caller;
             }
             return base.Equals(obj);
         }
@@ -58,7 +60,8 @@ namespace ActivityWatch.API.V1
                 this.BucketIDCustomPart,
                 this.File,
                 this.Language,
-               this.Project
+                this.Project,
+                this.Caller
             ).GetHashCode();
         }
 

@@ -12,16 +12,13 @@ namespace ActivityWatch.API.V1
 
         #endregion Constructors
 
-
-
         #region Methods
 
         public override bool Equals(object obj)
         {
             if (obj is Event evt)
             {
-                return ((this.Data as EventDataAppEditorActivity)?.Equals(evt.Data as EventDataAppEditorActivity) ?? false)
-                    ;
+                return ((this.Data as EventDataAppEditorActivity)?.Equals(evt.Data as EventDataAppEditorActivity) ?? false);
             }
             return base.Equals(obj);
         }

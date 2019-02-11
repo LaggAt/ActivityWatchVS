@@ -1,2 +1,12 @@
 ﻿ActivityWatcherVSWatcher release notes
 
+planned for next release
+- test the plugin
+- detect if aw-server is running, autostart if not (configurable)
+- what's next? suggest your ideas!
+
+0.0.0.1 First Alpha
+- send cumulated events to aw-server
+- use server from aw-server.ini (convention over configuration)
+- options dialog to enable/disable sending events, overriding URL, links
+- logging

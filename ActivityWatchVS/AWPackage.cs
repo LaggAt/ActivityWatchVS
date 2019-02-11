@@ -1,9 +1,9 @@
 ﻿using ActivityWatchVS.Services;
-using ActivityWatchVS.VO;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -12,45 +12,40 @@ using Task = System.Threading.Tasks.Task;
 
 namespace ActivityWatchVS
 {
-    /// <summary>
-    /// This is the class that implements the package exposed by this assembly.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// The minimum requirement for a class to be considered a valid package for Visual Studio is to
-    /// implement the IVsPackage interface and register itself with the shell. This package uses the
-    /// helper classes defined inside the Managed Package Framework (MPF) to do it: it derives from
-    /// the Package class that provides the implementation of the IVsPackage interface and uses the
-    /// registration attributes defined in the framework to register itself and its components with
-    /// the shell. These attributes tell the pkgdef creation utility what data to put into .pkgdef file.
-    /// </para>
-    /// <para>
-    /// To get loaded into VS, the package must be referred by &lt;Asset
-    /// Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
-    /// </para>
-    /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [PackageRegistration(UseManagedResourcesOnly = false, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(AWPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideOptionPage(typeof(UI.AWOptionUIElementDialogPage), "Activity Watch VS", "General", 0, 0, true)]
     public sealed class AWPackage : AsyncPackage
     {
-        #region Fields
+        #region Constants
 
-        public const string CLIENT_NAME = "aw-watcher-vs";
+        public const string NAME_ACTIVITY_WATCHER = "aw-watcher-vs";
+        public const string NAME_CS_PLUGIN = "ActivityWatchVS";
 
         /// <summary>
         /// AWPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "ccccb132-8911-489f-ae88-b0de87d77f49";
 
+        #endregion Constants
+
+        #region Fields
+
+        private AWOptionService _awOptions;
+        private Listeners.DTE2EventListener _dte2EventListener = null;
         private DTE2 _dte2Service = null;
         private EventService _eventService;
-        private FeaturesVO _featuresVO = new VO.FeaturesVO();
-        private Listeners.TextEditorEventListener _textEditorEventListener = null;
+        private bool _isReady;
+
+        //private FeaturesVO _featuresVO = new VO.FeaturesVO();
+        private LogService _logService;
+
+        private IProgress<ServiceProgressData> _progress;
 
         #endregion Fields
 
@@ -67,38 +62,43 @@ namespace ActivityWatchVS
 
         #region Properties
 
-        internal DTE2 DTE2Service
-        {
-            get
-            {
-                return _dte2Service;
-            }
-        }
+        public bool IsReady { get => _isReady; }
+        internal AWOptionService AwOptions { get => _awOptions; }
+        internal DTE2 DTE2Service => _dte2Service;
+        internal EventService EventService => _eventService;
 
-        internal EventService EventService
-        {
-            get
-            {
-                return _eventService;
-            }
-        }
-
-        internal FeaturesVO Features
-        {
-            get
-            {
-                return _featuresVO;
-            }
-        }
+        //internal FeaturesVO Features => _featuresVO;
+        internal LogService LogService => _logService;
 
         #endregion Properties
 
         #region Package Members
 
+        public void Dispose()
+        {
+            shutdown();
+        }
+
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            cancellationToken.Register(() => Features.Shutdown());
-            progress.Report(new ServiceProgressData("ActivityWatchVS starting"));
+            _progress = progress;
+            _progress.Report(new ServiceProgressData("ActivityWatchVS starting"));
+            this.DisposalToken.Register(() => shutdown());
+
+            // background thread
+            await BackgroundThreadInitialization();
+            // main thread
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await MainThreadInitialization();
+
+            _isReady = true;
+            _progress.Report(new ServiceProgressData("ActivityWatchVS running"));
+        }
+
+        private async Task BackgroundThreadInitialization()
+        {
+            // Logger
+            _logService = new Services.LogService(this, await GetServiceAsync(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane);
 
             // ... Services VS
             _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
@@ -106,17 +106,26 @@ namespace ActivityWatchVS
             // ... our Services
             _eventService = new Services.EventService(this);
 
-            // we are ready to send events
-            Features.ServicesAreUp();
+            //// we are ready to send events
+            //Features.ServicesAreUp();
+
             // ... Listeners
-            _textEditorEventListener = new Listeners.TextEditorEventListener(this);
+            _dte2EventListener = new Listeners.DTE2EventListener(this);
+        }
 
-            // init on UI thread:
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            // ... UI
-            await UI.EnableDisableAWWatcherCommand.InitializeAsync(this);
+        private async Task MainThreadInitialization()
+        {
+            // single class for AW ini file and our own settings
+            _awOptions = await Services.AWOptionService.InitializeAsync(this);
+        }
 
-            progress.Report(new ServiceProgressData("ActivityWatchVS running"));
+        private void shutdown()
+        {
+            EventService?.Shutdown();
+
+            // tell the world we 're done
+            LogService?.Log(NAME_CS_PLUGIN + " finished.", LogService.EErrorLevel.Info);
+            _progress.Report(new ServiceProgressData("ActivityWatchVS ended"));
         }
 
         #endregion Package Members
