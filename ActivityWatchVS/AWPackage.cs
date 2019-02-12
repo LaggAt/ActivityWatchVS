@@ -42,7 +42,6 @@ namespace ActivityWatchVS
         private EventService _eventService;
         private bool _isReady;
 
-        //private FeaturesVO _featuresVO = new VO.FeaturesVO();
         private LogService _logService;
 
         private IProgress<ServiceProgressData> _progress;
@@ -67,7 +66,6 @@ namespace ActivityWatchVS
         internal DTE2 DTE2Service => _dte2Service;
         internal EventService EventService => _eventService;
 
-        //internal FeaturesVO Features => _featuresVO;
         internal LogService LogService => _logService;
 
         #endregion Properties

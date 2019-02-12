@@ -5,6 +5,11 @@ planned for next release
 - detect if aw-server is running, autostart if not (configurable)
 - what's next? suggest your ideas!
 
+0.0.0.2 UI Alpha
+- style VS options page
+- custom logo
+- package metadata
+
 0.0.0.1 First Alpha
 - send cumulated events to aw-server
 - use server from aw-server.ini (convention over configuration)

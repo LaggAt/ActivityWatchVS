@@ -1,4 +1,6 @@
-﻿Mozilla Public License Version 2.0
+﻿ActivityWatchVS (c) 2019 Florian Lagg <https://github.com/LaggAt/ActivityWatchVS>
+
+Mozilla Public License Version 2.0
 ==================================
 
 1. Definitions

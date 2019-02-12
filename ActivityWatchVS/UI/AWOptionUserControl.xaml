@@ -5,23 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ActivityWatchVS.UI"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Margin="5" FontSize="20">Plugin Settings</TextBlock>
-        <CheckBox Margin="5" IsChecked="{Binding IsEnabled, Mode=TwoWay}">Send events to aw-server</CheckBox>
-        <TextBlock Margin="5" FontSize="20">aw-server Configuration</TextBlock>
-        <TextBlock Margin="5">Without Configuration we will use the server config from aw-server.ini</TextBlock>
+        <Grid>
+            <!-- Grid seems wrong here, but it works for now -->
+            <Image Margin="3" Source="/ActivityWatchVS;component/Resources/AWPackage.ico" Width="128" Height="128" HorizontalAlignment="Right" />
+            <StackPanel>
+                <TextBlock Margin="3" FontSize="20">ActivityWatch VS</TextBlock>
+                <TextBlock Margin="3" FontSize="15"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/LaggAt/ActivityWatchVS">https://github.com/LaggAt/ActivityWatchVS</Hyperlink></TextBlock>
+            </StackPanel>
+        </Grid>
+        <TextBlock Margin="3" FontSize="20">Privacy</TextBlock>
+        <CheckBox Margin="3" IsChecked="{Binding IsEnabled, Mode=TwoWay}">Send events to aw-server</CheckBox>
+        <TextBlock Margin="3" FontSize="20">aw-server Configuration</TextBlock>
+        <TextBlock Margin="3">We are using the aw-server's aw-server.ini (%localappdata%\activitywatch\activitywatch)</TextBlock>
         <DockPanel>
-            <Label Margin="5">override API URL:</Label>
-            <TextBox Width="auto" Margin="5" Text="{Binding ActivityWatchBaseURL, Mode=TwoWay}"></TextBox>
+            <Label Margin="3">API URL (override):</Label>
+            <TextBox Width="auto" Margin="3" Text="{Binding ActivityWatchBaseURL, Mode=TwoWay}"></TextBox>
         </DockPanel>
-        <TextBlock Margin="5" FontSize="20">Requirements</TextBlock>
-        <TextBlock Margin="5">You need to install and start ActivityWatch</TextBlock>
-        <TextBlock Margin="5"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/ActivityWatch/activitywatch/releases">Download ActivityWatch</Hyperlink></TextBlock>
-        <TextBlock Margin="5"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="shell:startup">Autostart folder (create a link to aw-server.exe here)</Hyperlink></TextBlock>
-        <TextBlock Margin="5" FontSize="20">Credits</TextBlock>
-        <TextBlock Margin="5"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://activitywatch.net/">ActivityWatch - excelent automatic time tracking where your own your data.</Hyperlink></TextBlock>
-        <TextBlock Margin="5"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://nswag.org">NSwag - Swagger Toolchain</Hyperlink></TextBlock>
-        <TextBlock Margin="5"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/Szpi/IniWrapper">IniWrapper - easy reading of ActivityWatch's config file</Hyperlink></TextBlock>
+        <TextBlock Margin="3" FontSize="20">Requirements</TextBlock>
+        <TextBlock Margin="3">You need to install and start ActivityWatch</TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/ActivityWatch/activitywatch/releases">Download ActivityWatch</Hyperlink></TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="shell:startup">Autostart folder (create a link to aw-server.exe here)</Hyperlink></TextBlock>
+        <TextBlock Margin="3" FontSize="20">Credits</TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://activitywatch.net/">ActivityWatch - excelent automatic time tracking where your own your data.</Hyperlink></TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/Szpi/IniWrapper">IniWrapper - easy reading of ActivityWatch's config file</Hyperlink></TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://nswag.org">NSwag - Swagger Toolchain</Hyperlink></TextBlock>
+        <TextBlock Margin="3" FontSize="20">Copyright/License</TextBlock>
+        <TextBlock Margin="3">(c) 2019 Florian Lagg</TextBlock>
+        <TextBlock Margin="3"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://raw.githubusercontent.com/LaggAt/ActivityWatchVS/master/ActivityWatchVS/LICENSE.txt">Mozilla Public License Version 2.0</Hyperlink></TextBlock>
     </StackPanel>
 </UserControl>
