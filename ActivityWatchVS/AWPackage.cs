@@ -39,6 +39,8 @@ namespace ActivityWatchVS
         private AWOptionService _awOptions;
         private Listeners.DTE2EventListener _dte2EventListener = null;
         private DTE2 _dte2Service = null;
+        private AwBinaryService _awBinaryService;
+
         private EventService _eventService;
         private bool _isReady;
 
@@ -64,6 +66,7 @@ namespace ActivityWatchVS
         public bool IsReady { get => _isReady; }
         internal AWOptionService AwOptions { get => _awOptions; }
         internal DTE2 DTE2Service => _dte2Service;
+        internal AwBinaryService AwBinaryService => _awBinaryService;
         internal EventService EventService => _eventService;
 
         internal LogService LogService => _logService;
@@ -102,11 +105,11 @@ namespace ActivityWatchVS
             _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
 
             // ... our Services
+            _awBinaryService = new Services.AwBinaryService(this);
             _eventService = new Services.EventService(this);
 
-            //// we are ready to send events
-            //Features.ServicesAreUp();
-
+            // we are ready to send events
+            
             // ... Listeners
             _dte2EventListener = new Listeners.DTE2EventListener(this);
         }

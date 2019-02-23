@@ -1,8 +1,10 @@
 ﻿using ActivityWatch.API.V1;
+using ActivityWatchVS.Tools;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -213,6 +215,16 @@ namespace ActivityWatchVS.Services
                             }
                             catch (Exception ex)
                             {
+                                var sockEx = ex.GetInnerst<SocketException>();
+                                if (sockEx != null)
+                                {
+                                    if(sockEx.SocketErrorCode == SocketError.ConnectionRefused)
+                                    {
+                                        //aw_service is not running, try to find and start it
+                                        _package.AwBinaryService.TryStartAwServer();
+                                    }
+                                }
+
                                 // some error, retry regularly
                                 _package.LogService.Log(ex, logEvent.ToJson());
                                 if (!_doShutdown) //(!cancellationToken.IsCancellationRequested)

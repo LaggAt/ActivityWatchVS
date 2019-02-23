@@ -6,10 +6,9 @@ namespace ActivityWatchVS.Services
     {
         #region Fields
 
-        private AWPackage _package;
-        private UI.AWOptionUIElementDialogPage _awOptions;
         private AWConfigurationService _awINI;
-
+        private UI.AWOptionUIElementDialogPage _awOptions;
+        private AWPackage _package;
         #endregion Fields
 
         #region Constructors
@@ -19,7 +18,9 @@ namespace ActivityWatchVS.Services
             _package = package;
             _awOptions = (UI.AWOptionUIElementDialogPage)_package.GetDialogPage(typeof(UI.AWOptionUIElementDialogPage));
             _awINI = new Services.AWConfigurationService(_package);
+            setAWUrl();
         }
+
 
         #endregion Constructors
 
@@ -30,16 +31,19 @@ namespace ActivityWatchVS.Services
         {
             get
             {
-                string url = _awOptions.ActivityWatchBaseURL;
-                if (string.IsNullOrWhiteSpace(url))
+                return _awOptions.ActivityWatchBaseURL;
+            }
+        }
+
+        public string DefaultURL
+        {
+            get
+            {
+                if (IsProductive)
                 {
-#if DEBUG
-                    url = $@"http://{_awINI.AwConfig.HostTesting}:{_awINI.AwConfig.PortTesting}/api";
-#else
-                    url = $@"http://{_awINI.AwConfig.Host}:{_awINI.AwConfig.Port}/api";
-#endif
+                    return $@"http://{_awINI.AwConfig.Host}:{_awINI.AwConfig.Port}/api";
                 }
-                return url;
+                return $@"http://{_awINI.AwConfig.HostTesting}:{_awINI.AwConfig.PortTesting}/api";
             }
         }
 
@@ -48,11 +52,37 @@ namespace ActivityWatchVS.Services
         /// </summary>
         public bool IsEnabled { get => _awOptions.IsEnabled; }
 
+        /// <summary>
+        /// Productive or Testing Server?
+        /// </summary>
+        public bool IsProductive
+        {
+            get
+            {
+#if DEBUG
+                return false;
+#else
+                return true;
+#endif
+            }
+        }
         #endregion Properties
+
+        #region Methods
 
         internal static async Task<AWOptionService> InitializeAsync(AWPackage package)
         {
             return new AWOptionService(package);
         }
+
+        private void setAWUrl()
+        {
+            if (string.IsNullOrWhiteSpace(_awOptions.ActivityWatchBaseURL))
+            {
+                _awOptions.ActivityWatchBaseURL = DefaultURL;
+            }
+        }
+
+        #endregion Methods
     }
 }

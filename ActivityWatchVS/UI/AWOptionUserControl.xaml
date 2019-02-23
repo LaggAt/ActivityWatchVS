@@ -20,7 +20,7 @@
         <TextBlock Margin="3" FontSize="20">aw-server Configuration</TextBlock>
         <TextBlock Margin="3">We are using the aw-server's aw-server.ini (%localappdata%\activitywatch\activitywatch)</TextBlock>
         <DockPanel>
-            <Label Margin="3">API URL (override):</Label>
+            <Label Margin="3">API URL:</Label>
             <TextBox Width="auto" Margin="3" Text="{Binding ActivityWatchBaseURL, Mode=TwoWay}"></TextBox>
         </DockPanel>
         <TextBlock Margin="3" FontSize="20">Requirements</TextBlock>

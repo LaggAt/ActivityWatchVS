@@ -5,6 +5,9 @@ planned for next release
 - detect if aw-server is running, autostart if not (configurable)
 - what's next? suggest your ideas!
 
+0.0.0.3 Usage improvement
+- autostart aw-qt.exe if found in several path (e.g. C:\Program Files\activitywatch\aw-qt.exe)
+
 0.0.0.2 UI Alpha
 - style VS options page
 - custom logo
