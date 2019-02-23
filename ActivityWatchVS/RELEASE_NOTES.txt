@@ -6,7 +6,7 @@ planned for next release
 - what's next? suggest your ideas!
 
 0.0.0.3 Usage improvement
-- autostart aw-qt.exe if found in several path (e.g. C:\Program Files\activitywatch\aw-qt.exe)
+- autostart aw-qt.exe if found - searching program files and appdata folders (e.g. C:\Program Files\activitywatch\aw-qt.exe)
 
 0.0.0.2 UI Alpha
 - style VS options page
