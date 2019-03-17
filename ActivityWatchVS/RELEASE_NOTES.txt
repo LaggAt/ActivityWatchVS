@@ -1,9 +1,16 @@
 ﻿ActivityWatcherVSWatcher release notes
 
 planned for next release
-- test the plugin
+- get some information from source control / tfs
 - detect if aw-server is running, autostart if not (configurable)
 - what's next? suggest your ideas!
+
+1.0.4.0 (stable) build pipeline for VSIX Packages
+
+0.0.0.4 prepairing for automated builds
+- testing and configuring deployment
+- fix bug not able to set url to a non-default
+- as all works great for now let's call this stable
 
 0.0.0.3 Usage improvement
 - autostart aw-qt.exe if found - searching program files and appdata folders (e.g. C:\Program Files\activitywatch\aw-qt.exe)
