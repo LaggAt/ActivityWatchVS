@@ -12,7 +12,7 @@ Basically we could track all you do in your solution. </Description>
         <License>LICENSE.txt</License>
         <GettingStartedGuide>GETTING_STARTED.txt</GettingStartedGuide>
         <ReleaseNotes>CHANGELOG.md</ReleaseNotes>
-        <Icon>Resources\AWPackage.ico</Icon>
+        <Icon>AWPackage.ico</Icon>
         <PreviewImage>Resources\Screenshots\VS-Options-Dialog.png</PreviewImage>
         <Tags>Activity Watch, quantified self, lifelog, coding, tracking</Tags>
     </Metadata>

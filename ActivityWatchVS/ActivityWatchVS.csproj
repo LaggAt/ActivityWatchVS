@@ -101,9 +101,10 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Binaries\IniWrapper.dll" />
-    <Resource Include="Resources\AWPackage.ico">
+    <Content Include="Resources\AWPackage.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
