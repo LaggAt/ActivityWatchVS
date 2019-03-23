@@ -56,7 +56,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AWPackage.cs" />
-    <Compile Include="Listeners\VersionControlListener.cs" />
     <Compile Include="Services\AwBinaryService.cs" />
     <Compile Include="Services\AWConfigurationService.cs" />
     <Compile Include="Services\AWOptionService.cs" />

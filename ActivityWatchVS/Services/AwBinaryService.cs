@@ -31,7 +31,7 @@ namespace ActivityWatchVS.Services
                 {
                     if (!_startedAwServer)
                     {
-                        _startedAwServer = true;
+                        _startedAwServer = true; // we try that only once!
                         _package.LogService.Log("AW-Server not running, I try to start it.", LogService.EErrorLevel.Debug);
                         Task task = new Task(() => startAwServerThread());
                         task.Start();
@@ -80,28 +80,39 @@ namespace ActivityWatchVS.Services
 
         private string stripPathRoot(string p)
         {
-            if (p.StartsWith(Path.GetPathRoot(p)))
-            {
-                return p.Substring(Path.GetPathRoot(p).Length);
+            try
+            { 
+                if (p.StartsWith(Path.GetPathRoot(p)))
+                {
+                    return p.Substring(Path.GetPathRoot(p).Length);
+                }
             }
+            catch { }
             return p;
         }
 
         private void startAwServerThread()
         {
-            var exePath = findAwServerExe();
-            if (exePath == null)
+            try
             {
-                _package.LogService.Log($"AW-Server not running, I cannot find the executable '{AW_EXE}'.", LogService.EErrorLevel.Error);
-                return;
+                var exePath = findAwServerExe();
+                if (exePath == null)
+                {
+                    _package.LogService.Log($"AW-Server not running, I cannot find the executable '{AW_EXE}'.", LogService.EErrorLevel.Error);
+                    return;
+                }
+                var arguments = string.Empty;
+                if (!_package.AwOptions.IsProductive)
+                {
+                    arguments = "--testing";
+                }
+                Process.Start(exePath, arguments);
+                _package.LogService.Log($"AW-Server not running, started '{exePath} {arguments}'.", LogService.EErrorLevel.Info);
             }
-            var arguments = string.Empty;
-            if (!_package.AwOptions.IsProductive)
+            catch (Exception ex)
             {
-                arguments = "--testing";
+                _package.LogService.Log(ex, $"I failed to start {AW_EXE}, this is a bug. Please report it.", activate: true);
             }
-            Process.Start(exePath, arguments);
-            _package.LogService.Log($"AW-Server not running, started '{exePath} {arguments}'.", LogService.EErrorLevel.Info);
         }
     }
 }

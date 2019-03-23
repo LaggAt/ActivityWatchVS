@@ -124,11 +124,10 @@ namespace ActivityWatchVS.Listeners
                 string language = null;
                 if (!string.IsNullOrWhiteSpace(activeDocument))
                 {
-                    language = _package.DTE2Service.ActiveDocument?.Language;
-                    if (string.IsNullOrWhiteSpace(language))
-                    {
-                        language = Path.GetExtension(activeDocument).TrimStart(".".ToCharArray());
-                    }
+                    // we keep that for later, for now I find it more useful to use the file extension as language
+                    //language = _package.DTE2Service.ActiveDocument?.Language;
+                    //if (string.IsNullOrWhiteSpace(language))
+                    language = Path.GetExtension(activeDocument).TrimStart(".".ToCharArray());
                 }
 
                 var data = new ActivityWatch.API.V1.EventDataAppEditorActivity()

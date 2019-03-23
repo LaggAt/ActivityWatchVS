@@ -45,7 +45,6 @@ namespace ActivityWatchVS
         private bool _isReady;
         private LogService _logService;
         private IProgress<ServiceProgressData> _progress;
-        private VersionControlListener _versionControlListener = null;
 
         #endregion Fields
 
@@ -101,8 +100,7 @@ namespace ActivityWatchVS
             _logService = new Services.LogService(this, await GetServiceAsync(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane);
 
             try
-            { 
-            
+            {
                 // ... Services VS
                 _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
 
@@ -114,7 +112,6 @@ namespace ActivityWatchVS
 
                 // ... Listeners
                 _dte2EventListener = new Listeners.DTE2EventListener(this);
-                _versionControlListener = new Listeners.VersionControlListener(this);
             }
             catch (Exception ex)
             {
