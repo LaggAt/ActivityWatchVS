@@ -1,0 +1,7 @@
+﻿Easy ...
+
+1) download & extract ActivityWatch https://github.com/ActivityWatch/activitywatch/releases
+2) start aw-server.exe (optional: start it with windows by putting a link in "shell:startup")
+3) install this plugin
+
+Enjoy.
