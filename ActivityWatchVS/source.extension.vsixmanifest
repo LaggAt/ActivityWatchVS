@@ -6,8 +6,7 @@
         <Description xml:space="preserve">Track your work with this plugin and activitywatch.net. Ever wanted to know where you spend your time?
 The Plugin is a Watcher for Visual Studio. It enables tracking of all, you do in your solution. We send this data to an Activity Watch installation on your machine, all tracked data belongs to you.
 
-Activity Watch tracks windows titles, we extend this functionality from inside Visual Studio:
-Basically we could track all you do in your solution. </Description>
+Activity Watch tracks windows titles, we extend this functionality from inside Visual Studio and track your file edits.</Description>
         <MoreInfo>https://github.com/LaggAt/ActivityWatchVS/</MoreInfo>
         <License>LICENSE.txt</License>
         <GettingStartedGuide>GETTING_STARTED.txt</GettingStartedGuide>
