@@ -1,4 +1,5 @@
-﻿using ActivityWatchVS.Services;
+﻿using ActivityWatchVS.Listeners;
+using ActivityWatchVS.Services;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
@@ -36,17 +37,15 @@ namespace ActivityWatchVS
 
         #region Fields
 
+        private AwBinaryService _awBinaryService;
         private AWOptionService _awOptions;
         private Listeners.DTE2EventListener _dte2EventListener = null;
         private DTE2 _dte2Service = null;
-        private AwBinaryService _awBinaryService;
-
         private EventService _eventService;
         private bool _isReady;
-
         private LogService _logService;
-
         private IProgress<ServiceProgressData> _progress;
+        private VersionControlListener _versionControlListener = null;
 
         #endregion Fields
 
@@ -64,9 +63,9 @@ namespace ActivityWatchVS
         #region Properties
 
         public bool IsReady { get => _isReady; }
+        internal AwBinaryService AwBinaryService => _awBinaryService;
         internal AWOptionService AwOptions { get => _awOptions; }
         internal DTE2 DTE2Service => _dte2Service;
-        internal AwBinaryService AwBinaryService => _awBinaryService;
         internal EventService EventService => _eventService;
 
         internal LogService LogService => _logService;
@@ -101,23 +100,38 @@ namespace ActivityWatchVS
             // Logger
             _logService = new Services.LogService(this, await GetServiceAsync(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane);
 
-            // ... Services VS
-            _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
-
-            // ... our Services
-            _awBinaryService = new Services.AwBinaryService(this);
-            _eventService = new Services.EventService(this);
-
-            // we are ready to send events
+            try
+            { 
             
-            // ... Listeners
-            _dte2EventListener = new Listeners.DTE2EventListener(this);
+                // ... Services VS
+                _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
+
+                // ... our Services
+                _awBinaryService = new Services.AwBinaryService(this);
+                _eventService = new Services.EventService(this);
+
+                // we are ready to send events
+
+                // ... Listeners
+                _dte2EventListener = new Listeners.DTE2EventListener(this);
+                _versionControlListener = new Listeners.VersionControlListener(this);
+            }
+            catch (Exception ex)
+            {
+                _logService.Log(ex, "ActivityWatchVS: This is a bug, please report it!", activate: true);
+            }
         }
 
         private async Task MainThreadInitialization()
         {
-            // single class for AW ini file and our own settings
-            _awOptions = await Services.AWOptionService.InitializeAsync(this);
+            try { 
+                // single class for AW ini file and our own settings
+                _awOptions = await Services.AWOptionService.InitializeAsync(this);
+            }
+            catch (Exception ex)
+            {
+                _logService.Log(ex, "ActivityWatchVS: This is a bug, please report it!", activate: true);
+            }
         }
 
         private void shutdown()

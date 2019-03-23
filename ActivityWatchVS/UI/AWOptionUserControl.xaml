@@ -16,12 +16,14 @@
             </StackPanel>
         </Grid>
         <TextBlock Margin="3" FontSize="20">Privacy</TextBlock>
-        <CheckBox Margin="3" IsChecked="{Binding IsEnabled, Mode=TwoWay}">Send events to aw-server</CheckBox>
+        <CheckBox Margin="3" IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Send events to aw-server</CheckBox>
         <TextBlock Margin="3" FontSize="20">aw-server Configuration</TextBlock>
         <TextBlock Margin="3">We are using the aw-server's aw-server.ini (%localappdata%\activitywatch\activitywatch)</TextBlock>
         <DockPanel>
             <Label Margin="3">API URL:</Label>
-            <TextBox Width="auto" Margin="3" Text="{Binding ActivityWatchBaseURL, Mode=TwoWay}"></TextBox>
+            <TextBox Width="auto" Margin="3"
+                     Text="{Binding ActivityWatchBaseURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
         </DockPanel>
         <TextBlock Margin="3" FontSize="20">Requirements</TextBlock>
         <TextBlock Margin="3">You need to install and start ActivityWatch</TextBlock>
