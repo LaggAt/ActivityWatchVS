@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-	<Metadata>
-		<Identity Id="ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5" Version="1.0.0.8" Language="en-US" Publisher="Florian Lagg" />
-		<DisplayName>ActivityWatchVS</DisplayName>
-		<Description xml:space="preserve">Track your work with this plugin and activitywatch.net. Ever wanted to know where you spend your time?
+  <Metadata>
+    <Identity Id="ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5" Version="1.0.0.8" Language="en-US" Publisher="Florian Lagg" />
+    <DisplayName>ActivityWatchVS</DisplayName>
+    <Description xml:space="preserve">Track your work with this plugin and activitywatch.net. Ever wanted to know where you spend your time?
 The Plugin is a Watcher for Visual Studio. It enables tracking of all, you do in your solution. We send this data to an Activity Watch installation on your machine, all tracked data belongs to you.
 
 Activity Watch tracks windows titles, we extend this functionality from inside Visual Studio and track your file edits.</Description>
-		<MoreInfo>https://github.com/LaggAt/ActivityWatchVS/</MoreInfo>
-		<License>LICENSE.txt</License>
-		<GettingStartedGuide>GETTING_STARTED.txt</GettingStartedGuide>
-		<ReleaseNotes>CHANGELOG.md</ReleaseNotes>
-		<Icon>Resources\AWPackage.ico</Icon>
-		<PreviewImage>Resources\Screenshots\VS-Options-Dialog.png</PreviewImage>
-		<Tags>Activity Watch, quantified self, lifelog, coding, tracking</Tags>
-	</Metadata>
-	<Installation InstalledByMsi="true">
-		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
-		<InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0, 17.0)" />
-		<InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[15.0, 17.0)" />
-	</Installation>
-	<Dependencies>
-		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
-		<Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0]" />
-	</Dependencies>
-	<Prerequisites>
-		<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
-	</Prerequisites>
-	<Assets>
-		<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-	</Assets>
+    <MoreInfo>https://github.com/LaggAt/ActivityWatchVS/</MoreInfo>
+    <License>LICENSE.txt</License>
+    <GettingStartedGuide>GETTING_STARTED.txt</GettingStartedGuide>
+    <ReleaseNotes>CHANGELOG.md</ReleaseNotes>
+    <Icon>Resources\AWPackage.ico</Icon>
+    <PreviewImage>Resources\Screenshots\VS-Options-Dialog.png</PreviewImage>
+    <Tags>Activity Watch, quantified self, lifelog, coding, tracking</Tags>
+  </Metadata>
+  <Installation InstalledByMsi="true">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0, 17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[15.0, 17.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+    <Dependency d:Source="Installed" Version="[15.0,)" Id="Microsoft.VisualStudio.MPF" DisplayName="Visual Studio MPF" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
 </PackageManifest>

@@ -6,10 +6,13 @@
              xmlns:local="clr-namespace:ActivityWatchVS.UI"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BitmapImage x:Key="Logo" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="H:\dev\LaggAt\ActivityWatchVS\ActivityWatchVS\AWPackage.ico"/>
+    </UserControl.Resources>
     <StackPanel>
         <Grid>
             <!-- Grid seems wrong here, but it works for now -->
-            <Image Margin="3" Source="/ActivityWatchVS;component/Resources/AWPackage.ico" Width="128" Height="128" HorizontalAlignment="Right" />
+            <Image Margin="3" Width="128" Height="128" HorizontalAlignment="Right" Source="{DynamicResource Logo}" />
             <StackPanel>
                 <TextBlock Margin="3" FontSize="20">ActivityWatch VS</TextBlock>
                 <TextBlock Margin="3" FontSize="15"><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/LaggAt/ActivityWatchVS">https://github.com/LaggAt/ActivityWatchVS</Hyperlink></TextBlock>
