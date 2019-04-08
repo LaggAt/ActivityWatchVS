@@ -11,7 +11,7 @@ Features that have a checkmark are complete and available for
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery
 
-## next release
+## future release
 
 - [ ] TFS / Work Item tracking
 - [ ] ...
@@ -19,6 +19,10 @@ on the official Visual Studio extension gallery
 ## 1.0.x.6 (stable) feedback round
 
 - [ ] upload stable build to Visual Studio Marketplace
+
+## 0.9.x.6 (beta) vsix configuration
+
+- [x] enable it for other VS Versions (Community, Pro, Enterprise for VS 2017/2019)
 
 ## 0.9.x.5 (beta) automate deployment of beta/stable branches
 
