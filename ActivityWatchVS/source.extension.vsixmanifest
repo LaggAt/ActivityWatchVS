@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5" Version="0.9.0.6" Language="en-US" Publisher="Florian Lagg" />
+        <Identity Id="ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5" Version="0.9.0.7" Language="en-US" Publisher="Florian Lagg" />
         <DisplayName>ActivityWatchVS</DisplayName>
         <Description xml:space="preserve">Track your work with this plugin and activitywatch.net. Ever wanted to know where you spend your time?
 The Plugin is a Watcher for Visual Studio. It enables tracking of all, you do in your solution. We send this data to an Activity Watch installation on your machine, all tracked data belongs to you.
@@ -11,7 +11,7 @@ Activity Watch tracks windows titles, we extend this functionality from inside V
         <License>LICENSE.txt</License>
         <GettingStartedGuide>GETTING_STARTED.txt</GettingStartedGuide>
         <ReleaseNotes>CHANGELOG.md</ReleaseNotes>
-        <Icon>AWPackage.ico</Icon>
+        <Icon>Resources\AWPackage.ico</Icon>
         <PreviewImage>Resources\Screenshots\VS-Options-Dialog.png</PreviewImage>
         <Tags>Activity Watch, quantified self, lifelog, coding, tracking</Tags>
     </Metadata>
