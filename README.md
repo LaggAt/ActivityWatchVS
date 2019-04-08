@@ -3,9 +3,8 @@
 <!-- Replace this badge with your own-->
 [![Build status](https://ci.appveyor.com/api/projects/status/oef73tkesayffp00?svg=true)](https://ci.appveyor.com/project/madskristensen/extensibilitytools)
 
-<!-- Update the VS Gallery link after you upload the VSIX
-Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/[GuidFromGallery])
-or -->get the [CI build](http://vsixgallery.com/extension/ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5/).
+Download this extension from the [VS Gallery](https://marketplace.visualstudio.com/items?itemName=FlorianLagg.ActivityWatchVS)
+or get the [CI build](https://vsixgallery.com/extension/ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5/).
 
 ---------------------------------------
 

@@ -88,10 +88,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="AWPackage.ico" />
-    <Content Include="CHANGELOG.md">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <None Include="GeneralSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>GeneralSettings.Designer.cs</LastGenOutput>
@@ -110,6 +106,7 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Binaries\IniWrapper.dll" />
+    <Content Include="CHANGELOG.md" />
     <Content Include="Resources\AWPackage.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

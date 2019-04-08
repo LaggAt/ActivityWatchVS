@@ -14,13 +14,13 @@ on the official Visual Studio extension gallery
 ## future release
 
 - [ ] TFS / Work Item tracking
-- [ ] ...
+- [ ] ... your ideas
 
-## 1.0.x.6 (stable) feedback round
+## 1.0.x.8 (stable) feedback round
 
-- [ ] upload stable build to Visual Studio Marketplace
+- [x] upload stable build to Visual Studio Marketplace
 
-## 0.9.x.6 (beta) vsix configuration
+## 0.9.x.6 - 0.9.x.7 (beta) vsix configuration
 
 - [x] enable it for other VS Versions (Community, Pro, Enterprise for VS 2017/2019)
 

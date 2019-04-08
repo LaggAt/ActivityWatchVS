@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityWatchVS", "ActivityWatchVS\ActivityWatchVS.csproj", "{7499C181-6E02-4184-86D9-69EC7F782DA7}"
 EndProject
@@ -10,7 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CFD056C9-5294-4902-A2EB-488A327E7339}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
-		CHANGELOG.md = CHANGELOG.md
+		ActivityWatchVS\CHANGELOG.md = ActivityWatchVS\CHANGELOG.md
 		ActivityWatchVS\GETTING_STARTED.txt = ActivityWatchVS\GETTING_STARTED.txt
 		ActivityWatchVS\LICENSE.txt = ActivityWatchVS\LICENSE.txt
 		README.md = README.md
