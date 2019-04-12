@@ -16,6 +16,10 @@ on the official Visual Studio extension gallery
 - [ ] TFS / Work Item tracking
 - [ ] ... your ideas
 
+## 1.0.x.9 (stable) feedback round 2
+
+- [x] fixed 2019 install issues
+
 ## 1.0.x.8 (stable) feedback round
 
 - [x] upload stable build to Visual Studio Marketplace
