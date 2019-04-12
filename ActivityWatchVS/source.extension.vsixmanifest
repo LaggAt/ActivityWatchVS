@@ -15,7 +15,7 @@ Activity Watch tracks windows titles, we extend this functionality from inside V
         <PreviewImage>Resources\Screenshots\VS-Options-Dialog.png</PreviewImage>
         <Tags>Activity Watch, quantified self, lifelog, coding, tracking</Tags>
     </Metadata>
-    <Installation InstalledByMsi="true">
+    <Installation InstalledByMsi="false">
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
         <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0, 17.0)" />
         <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[15.0, 17.0)" />
