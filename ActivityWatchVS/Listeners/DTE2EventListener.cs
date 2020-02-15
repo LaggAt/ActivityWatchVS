@@ -111,8 +111,17 @@ namespace ActivityWatchVS.Listeners
 
             try
             {
-                string solution = _package.DTE2Service.Solution?.FullName;
-                string activeDocument = _package.DTE2Service.ActiveDocument?.FullName;
+                string solution = string.Empty; 
+                string activeDocument = string.Empty; 
+                try
+                {
+                    solution = _package.DTE2Service.Solution?.FullName;
+                    activeDocument = _package.DTE2Service.ActiveDocument?.FullName;
+                }
+                catch (ArgumentException argEx)
+                {
+                    // ignore this, on some events we are not able to get an active document.
+                }
                 if (!string.IsNullOrWhiteSpace(solution) && !string.IsNullOrWhiteSpace(activeDocument))
                 {
                     string solutionDir = Path.GetDirectoryName(solution);
@@ -151,7 +160,7 @@ namespace ActivityWatchVS.Listeners
             }
             catch (Exception ex)
             {
-                _package.LogService.Log(ex);
+                _package.LogService.Log(ex, $"Caller: {caller}");
             }
         }
 

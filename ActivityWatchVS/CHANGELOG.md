@@ -16,6 +16,10 @@ on the official Visual Studio extension gallery
 - [ ] TFS / Work Item tracking
 - [ ] ... your ideas
 
+## 1.0.18 (stable) bug fix
+
+- [x] bug fix: ArgumentException while getting active Document https://github.com/LaggAt/ActivityWatchVS/issues/1
+
 ## 1.0.x.9 (stable) feedback round 2
 
 - [x] fixed 2019 install issues
