@@ -14,7 +14,7 @@ The Plugin is a Watcher for Visual Studio. It enables tracking of all, you do in
 
 Activity Watch tracks windows titles, we extend this functionality from inside Visual Studio and track your file edits.";
         public const string Language = "en-US";
-        public const string Version = "1.0.0.9";
+        public const string Version = "1.1.0.0";
         public const string Author = "Florian Lagg";
         public const string Tags = "Activity Watch, quantified self, lifelog, coding, tracking";
     }
