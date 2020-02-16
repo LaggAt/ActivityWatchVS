@@ -16,6 +16,10 @@ on the official Visual Studio extension gallery
 - [ ] TFS / Work Item tracking
 - [ ] ... your ideas
 
+## 1.1.x (testing) get versioning right
+
+- [ ] fix appveyor/vsixmanifest files for correct version numbers everywhere
+
 ## 1.0.18 (stable) bug fix
 
 - [x] bug fix: ArgumentException while getting active Document https://github.com/LaggAt/ActivityWatchVS/issues/1

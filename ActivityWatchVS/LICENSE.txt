@@ -1,4 +1,4 @@
-﻿ActivityWatchVS (c) 2019 Florian Lagg <https://github.com/LaggAt/ActivityWatchVS>
+﻿ActivityWatchVS (c) 2019-2020 Florian Lagg <https://github.com/LaggAt/ActivityWatchVS>
 
 Mozilla Public License Version 2.0
 ==================================
