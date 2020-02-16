@@ -67,6 +67,11 @@
     <Compile Include="Services\AwBinaryService.cs" />
     <Compile Include="Services\AWConfigurationService.cs" />
     <Compile Include="Services\AWOptionService.cs" />
+    <Compile Include="source.extension.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>source.extension.vsixmanifest</DependentUpon>
+    </Compile>
     <Compile Include="Tools\ExceptionExtensions.cs" />
     <Compile Include="UI\AWOptionUIElementDialogPage.cs">
       <SubType>Component</SubType>
@@ -99,6 +104,8 @@
     <None Include="Resources\logo-vs-128.xcf" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
+      <Generator>VsixManifestGenerator</Generator>
+      <LastGenOutput>source.extension.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
