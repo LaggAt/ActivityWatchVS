@@ -4,9 +4,17 @@ branches:
   - stable
   - beta
   - alpha
+  - testing
 
 install:
 - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+
+version: '1.1.{build}'
+assembly_info:
+  patch: true
+  file: AssemblyInfo.cs
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
 
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
