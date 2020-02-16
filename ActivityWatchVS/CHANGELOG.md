@@ -9,16 +9,17 @@ Features that have a checkmark are complete and available for
 ## Change log
 
 These are the changes to each version that has been released
-on the official Visual Studio extension gallery
+on the official Visual Studio extension gallery (for stable)
+or on vsixgallery.com (beta/alpha/testing)
 
 ## future release
 
 - [ ] TFS / Work Item tracking
 - [ ] ... your ideas
 
-## 1.1.x (testing) get versioning right
+## 1.1.x (stable) get versioning right
 
-- [ ] fix appveyor/vsixmanifest files for correct version numbers everywhere
+- [x] fix appveyor/vsixmanifest files for correct version numbers everywhere https://github.com/LaggAt/ActivityWatchVS/issues/2
 
 ## 1.0.18 (stable) bug fix
 
