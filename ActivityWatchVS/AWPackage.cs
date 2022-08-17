@@ -82,52 +82,55 @@ namespace ActivityWatchVS
         {
             _progress = progress;
             _progress.Report(new ServiceProgressData("ActivityWatchVS starting"));
-            this.DisposalToken.Register(() => shutdown());
+            this.DisposalToken.Register(() => this.Dispose());
 
             // background thread
-            await BackgroundThreadInitialization();
+            await JoinableTaskFactory.StartOnIdle(() => BackgroundThreadInitializationAsync(), VsTaskRunContext.UIThreadBackgroundPriority);
+
             // main thread
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await MainThreadInitialization();
+            await MainThreadInitializationAsync();
 
             _isReady = true;
             _progress.Report(new ServiceProgressData("ActivityWatchVS running"));
         }
 
-        private async Task BackgroundThreadInitialization()
+        private async Task BackgroundThreadInitializationAsync()
         {
-            // Logger
-            _logService = new Services.LogService(this, await GetServiceAsync(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane);
-
             try
             {
                 // ... Services VS
                 _dte2Service = await GetServiceAsync(typeof(DTE)) as DTE2;
 
                 // ... our Services
-                _awBinaryService = new Services.AwBinaryService(this);
-                _eventService = new Services.EventService(this);
+                _awBinaryService = new AwBinaryService(this);
+                _eventService = new EventService(this);
 
                 // we are ready to send events
 
                 // ... Listeners
-                _dte2EventListener = new Listeners.DTE2EventListener(this);
+                _dte2EventListener = new DTE2EventListener(this);
             }
             catch (Exception ex)
             {
-                _logService.Log(ex, "ActivityWatchVS: This is a bug, please report it!", activate: true);
+                _logService?.Log(ex, "ActivityWatchVS: This is a bug, please report it!");
             }
         }
 
-        private async Task MainThreadInitialization()
+        private async Task MainThreadInitializationAsync()
         {
-            try { 
+            await JoinableTaskFactory.SwitchToMainThreadAsync(DisposalToken);
+
+            // Logger
+            _logService = new LogService(this, await GetServiceAsync(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane);
+
+            try
+            { 
                 // single class for AW ini file and our own settings
-                _awOptions = await Services.AWOptionService.InitializeAsync(this);
+                _awOptions = Services.AWOptionService.Initialize(this);
             }
             catch (Exception ex)
             {
-                _logService.Log(ex, "ActivityWatchVS: This is a bug, please report it!", activate: true);
+                _logService.Log(ex, "ActivityWatchVS: This is a bug, please report it!");
             }
         }
 

@@ -17,6 +17,10 @@ or on vsixgallery.com (beta/alpha/testing)
 - [ ] TFS / Work Item tracking
 - [ ] ... your ideas
 
+## 1.9.0 (testing) Visual Studio 2022 support
+
+- [x] thanks to https://github.com/DarkOoze we have VS2022 Support in testing now.
+
 ## 1.1.x (stable) get versioning right
 
 - [x] fix appveyor/vsixmanifest files for correct version numbers everywhere https://github.com/LaggAt/ActivityWatchVS/issues/2
