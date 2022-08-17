@@ -1,7 +1,7 @@
 # ActivityWatchVS
 
 <!-- Replace this badge with your own-->
-[![Build status](https://ci.appveyor.com/api/projects/status/oef73tkesayffp00?svg=true)](https://ci.appveyor.com/project/madskristensen/extensibilitytools)
+[![Build status](https://ci.appveyor.com/api/projects/status/oef73tkesayffp00/branch/stable?svg=true)](https://ci.appveyor.com/project/LaggAt/activitywatchvs/build/artifacts)
 
 Download this extension from the [VS Gallery](https://marketplace.visualstudio.com/items?itemName=FlorianLagg.ActivityWatchVS)
 or get the [CI build](http://vsixgallery.com/extension/ActivityWatchVS.ea6d1160-0387-4c74-9caf-1f9fcabf5ea5/).

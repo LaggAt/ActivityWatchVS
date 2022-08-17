@@ -1,4 +1,7 @@
 ﻿using EnvDTE;
+
+using Microsoft.VisualStudio.Shell;
+
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -22,6 +25,8 @@ namespace ActivityWatchVS.Listeners
 
         public DTE2EventListener(AWPackage package)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             this._package = package;
             var dte2Events = this._package.DTE2Service.Events;
 
@@ -183,6 +188,8 @@ namespace ActivityWatchVS.Listeners
 
         public void Dispose()
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             _buildEv.OnBuildBegin -= buildEvents_OnBuildBegin;
             _buildEv.OnBuildDone -= buildEvents_OnBuildDone;
             _documentEv.DocumentOpened -= documentEv_DocumentOpened;

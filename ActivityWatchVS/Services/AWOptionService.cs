@@ -70,7 +70,7 @@ namespace ActivityWatchVS.Services
 
         #region Methods
 
-        internal static async Task<AWOptionService> InitializeAsync(AWPackage package)
+        internal static AWOptionService Initialize(AWPackage package)
         {
             return new AWOptionService(package);
         }
