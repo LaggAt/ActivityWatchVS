@@ -1,0 +1,83 @@
+repo_name: LaggAt/ActivityWatchVS
+report_id: 5a8fb01f13eab73c4bceb410b240a6df
+version: 0.1
+repo_type: Public
+timestamp: '2024-03-17T13:50:24+00:00'
+requested_by: LaggAt
+provider: github
+branch: master
+detected_tools_count: 6
+tools:
+- name: ASP.NET
+  description: An open source web framework for building modern web apps and services
+    with .NET
+  website_url: https://www.asp.net/
+  version: 4.7.2
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/6755/2c45151a4a11d3a3c8e71bb34dd069d6_400x400.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS/blob/master/ActivityWatch.API/ActivityWatch.API.csproj
+  detection_source: ActivityWatch.API/ActivityWatch.API.csproj
+  last_updated_by: Florian Lagg
+  last_updated_on: 2019-02-01 21:29:08.000000000 Z
+- name: C#
+  description: Simple, general-purpose, object-oriented programming language for the
+    .NET platform
+  website_url: http://csharp.net
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1015/1200px-C_Sharp_wordmark.svg.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS
+  detection_source: Repo Metadata
+- name: CSS 3
+  description: The latest evolution of the Cascading Style Sheets language
+  website_url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS
+  detection_source: Repo Metadata
+- name: ".NET"
+  description: A free, cross-platform, open source developer platform for building
+    many different types of applications
+  website_url: http://www.microsoft.com/net/
+  version: 4.7.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1014/IoPy1dce_400x400.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS/blob/master/ActivityWatch.API/ActivityWatch.API.csproj
+  detection_source: ActivityWatch.API/ActivityWatch.API.csproj
+  last_updated_by: Florian Lagg
+  last_updated_on: 2019-02-01 21:29:08.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS
+  detection_source: Repo Metadata
+- name: Visual Studio
+  description: State-of-the-art tools and services that you can use to create great
+    apps for devices, the cloud, and everything in between.
+  website_url: http://msdn.microsoft.com/en-us/vstudio/aa718325.aspx
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Integrated Development Environment
+  image_url: https://img.stackshare.io/service/1451/SR2hUhQN.png
+  detection_source_url: https://github.com/LaggAt/ActivityWatchVS/blob/master/ActivityWatchVS.sln
+  detection_source: ActivityWatchVS.sln
+  last_updated_by: Florian Lagg
+  last_updated_on: 2019-04-08 19:17:58.000000000 Z
