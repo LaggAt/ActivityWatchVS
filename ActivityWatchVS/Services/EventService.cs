@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace ActivityWatchVS.Services
 
         private static string GetBucketId(Event ev)
         {
-            return $"{ev.Data.BucketIDCustomPart}_{Environment.MachineName}";
+            return $"{ev.Data.BucketIDCustomPart}_{Dns.GetHostName()}";
         }
 
         private bool MergeEventsAndOutFinishedEvent(out Event logEvent)
@@ -164,7 +165,7 @@ namespace ActivityWatchVS.Services
                 var awBucket = new CreateBucket()
                 {
                     Client = AWPackage.NAME_ACTIVITY_WATCHER,
-                    Hostname = Environment.MachineName,
+                    Hostname = Dns.GetHostName(),
                     Type = bucketType
                 };
 
